@@ -1,0 +1,16 @@
+version: '3.9'
+services:
+  wazuh:
+    image: wazuh/wazuh:4.7.0
+    ports:
+      - "55000:55000"
+    volumes:
+      - wazuh_data:/var/ossec/data
+    environment:
+      - WAZUH_MANAGER_NAME=wazuh
+    healthcheck:
+      test: curl --fail http://localhost:55000 || exit 1
+      interval: 30s
+      retries: 3
+volumes:
+  wazuh_data:
